@@ -20,6 +20,13 @@ namespace SimonSays
         {
             int length = Form1.pattern.Count() - 1;
             lengthLabel.Text = $"{length}";
+
+            // Check to see if theres a new highscore
+            if (length > Form1.highscore) { Form1.highscore = length; }
+
+            // Set the Label Text
+            highScoreLabel.Text = $"Highscore: {Form1.highscore}";
+
         }
 
         private void closeButton_Click(object sender, EventArgs e)

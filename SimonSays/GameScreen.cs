@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Simon Says Game
+// By James Johnson
+// Due: Feb 16th 2023
+
+#region Libraries
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -12,21 +17,21 @@ using System.Threading;
 using System.Timers;
 using System.Threading.Tasks;
 using System.Collections;
+#endregion
 
 namespace SimonSays
 {
     public partial class GameScreen : UserControl
     {
+        #region Global Variables
         int guess;
         Random randGen = new Random();
         Dictionary<ColorType, int> colorMap = new Dictionary<ColorType, int>();
-        SoundPlayer greenSound = new SoundPlayer(Properties.Resources.green);
-        SoundPlayer blueSound = new SoundPlayer(Properties.Resources.blue);
-        SoundPlayer redSound = new SoundPlayer(Properties.Resources.red);
-        SoundPlayer yellowSound = new SoundPlayer(Properties.Resources.yellow);
-        // 😎
-
         enum ColorType { Green, Red, Yellow, Blue };
+        SoundPlayer[] sounds = new SoundPlayer[5];
+        // 😎
+        #endregion
+
 
         public GameScreen()
         {
@@ -51,6 +56,13 @@ namespace SimonSays
             colorMap.Add(ColorType.Yellow, 2);
             colorMap.Add(ColorType.Blue, 3);
 
+            // Set Array
+            sounds.SetValue(new SoundPlayer(Properties.Resources.green), 0);
+            sounds.SetValue(new SoundPlayer(Properties.Resources.red), 1);
+            sounds.SetValue(new SoundPlayer(Properties.Resources.yellow), 2);
+            sounds.SetValue(new SoundPlayer(Properties.Resources.blue), 3);
+            sounds.SetValue(new SoundPlayer(Properties.Resources.mistake), 4);
+
             // Clear Pattern list
             Form1.pattern.Clear();
             Refresh();
@@ -65,6 +77,11 @@ namespace SimonSays
             blueButton.BackColor = Color.Blue;
             yellowButton.BackColor = Color.Yellow;
         }
+
+        /*
+         * This is used to prevent the player from clicking the buttons
+         * whenever the pattern is being played
+         */
 
         private void EnableButton(bool enabled)
         {
@@ -127,7 +144,7 @@ namespace SimonSays
         }
         public void GameOver()
         {
-            //TODO: Play a game over sound
+            sounds[4].Play();
 
 
             Form1.ChangeScreen(this, new GameOverScreen());
@@ -144,9 +161,9 @@ namespace SimonSays
             if (Form1.pattern[guess] == colorNum)
             {
                 // Set Color
-                greenButton.BackColor = Color.White;
+                greenButton.BackColor = Color.DarkGreen;
                 // Play Sound
-                greenSound.Play();
+                sounds[colorNum].Play();
                 Refresh();
                 // Brief Pause
                 await Task.Delay(200);
@@ -175,9 +192,9 @@ namespace SimonSays
             if (Form1.pattern[guess] == colorNum)
             {
                 // Set Color
-                redButton.BackColor = Color.White;
+                redButton.BackColor = Color.DarkRed;
                 // Play Sound
-                redSound.Play();
+                sounds[colorNum].Play();
                 Refresh();
                 // Brief Pause
                 await Task.Delay(200);
@@ -205,9 +222,9 @@ namespace SimonSays
             if (Form1.pattern[guess] == colorNum)
             {
                 // Set Color
-                yellowButton.BackColor = Color.White;
+                yellowButton.BackColor = Color.Gold;
                 // Play Sound
-                yellowSound.Play();
+                sounds[colorNum].Play();
                 Refresh();
                 // Brief Pause
                 await Task.Delay(200);
@@ -235,9 +252,9 @@ namespace SimonSays
             if (Form1.pattern[guess] == colorNum)
             {
                 // Set Color
-                blueButton.BackColor = Color.White;
+                blueButton.BackColor = Color.DarkBlue;
                 // Play Sound
-                blueSound.Play();
+                sounds[colorNum].Play();
                 Refresh();
                 // Brief Pause
                 await Task.Delay(200);
