@@ -38,7 +38,7 @@
             // 
             this.yellowButton.BackColor = System.Drawing.Color.Goldenrod;
             this.yellowButton.Location = new System.Drawing.Point(53, 183);
-            this.yellowButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.yellowButton.Margin = new System.Windows.Forms.Padding(4);
             this.yellowButton.Name = "yellowButton";
             this.yellowButton.Size = new System.Drawing.Size(147, 135);
             this.yellowButton.TabIndex = 3;
@@ -49,7 +49,7 @@
             // 
             this.blueButton.BackColor = System.Drawing.Color.DarkBlue;
             this.blueButton.Location = new System.Drawing.Point(203, 183);
-            this.blueButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.blueButton.Margin = new System.Windows.Forms.Padding(4);
             this.blueButton.Name = "blueButton";
             this.blueButton.Size = new System.Drawing.Size(147, 135);
             this.blueButton.TabIndex = 2;
@@ -60,7 +60,7 @@
             // 
             this.redButton.BackColor = System.Drawing.Color.DarkRed;
             this.redButton.Location = new System.Drawing.Point(203, 46);
-            this.redButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.redButton.Margin = new System.Windows.Forms.Padding(4);
             this.redButton.Name = "redButton";
             this.redButton.Size = new System.Drawing.Size(147, 135);
             this.redButton.TabIndex = 1;
@@ -70,8 +70,10 @@
             // greenButton
             // 
             this.greenButton.BackColor = System.Drawing.Color.ForestGreen;
+            this.greenButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.greenButton.FlatAppearance.BorderSize = 0;
             this.greenButton.Location = new System.Drawing.Point(53, 46);
-            this.greenButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.greenButton.Margin = new System.Windows.Forms.Padding(4);
             this.greenButton.Name = "greenButton";
             this.greenButton.Size = new System.Drawing.Size(147, 135);
             this.greenButton.TabIndex = 0;

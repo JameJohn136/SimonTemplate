@@ -17,6 +17,7 @@ using System.Threading;
 using System.Timers;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Drawing.Drawing2D;
 #endregion
 
 namespace SimonSays
@@ -29,6 +30,9 @@ namespace SimonSays
         Dictionary<ColorType, int> colorMap = new Dictionary<ColorType, int>();
         enum ColorType { Green, Red, Yellow, Blue };
         SoundPlayer[] sounds = new SoundPlayer[5];
+
+        GraphicsPath graphicPath = new GraphicsPath();
+        Region region;
         // 😎
         #endregion
 
@@ -44,11 +48,47 @@ namespace SimonSays
             OnLoad();
         }
 
+        private void CutButtons()
+        {
+            // Cut the buttons to make it look more similar to the original game
+            graphicPath.AddEllipse(-5, -5, 290, 290); //147, 135
+            region = new Region(graphicPath);
+            GraphicsPath exludePath = new GraphicsPath();
+            exludePath.AddEllipse(55, 55, 125, 125);
+
+            region.Exclude(exludePath);
+
+            // Set the Regions
+            greenButton.Region = region;
+            RotateGraphics();
+            redButton.Region = region;
+            RotateGraphics();
+            blueButton.Region = region;
+            RotateGraphics();
+            yellowButton.Region = region;
+
+            // Remove the borders
+            greenButton.FlatStyle = FlatStyle.Flat;
+            redButton.FlatStyle = FlatStyle.Flat;
+            blueButton.FlatStyle = FlatStyle.Flat;
+            yellowButton.FlatStyle = FlatStyle.Flat;
+
+        }
+
+        private void RotateGraphics()
+        {
+            //rotate the orientation of the screen by 90 degrees
+            Matrix transformMatrix = new Matrix();
+            transformMatrix.RotateAt(90, new PointF(55, 55));
+            region.Transform(transformMatrix);
+        }
+
 
         private async void OnLoad()
         {
             ResetColors();
             EnableButton(false);
+            CutButtons();
 
             // Set Dictionary
             colorMap.Add(ColorType.Green, 0);
