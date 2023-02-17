@@ -17,7 +17,6 @@ using System.Threading;
 using System.Timers;
 using System.Threading.Tasks;
 using System.Collections;
-using System.Drawing.Drawing2D;
 #endregion
 
 namespace SimonSays
@@ -45,7 +44,7 @@ namespace SimonSays
             InitializeComponent();
         }
 
-        private async void GameScreen_Load(object sender, EventArgs e)
+        private void GameScreen_Load(object sender, EventArgs e)
         {
             // Call an async void to prevent freezing the entire application
             OnLoad();
@@ -63,20 +62,13 @@ namespace SimonSays
 
             region.Exclude(exludePath);
 
-            // Set the Regions
-            //greenButton.Region = region;
-            //RotateGraphics();
-            //redButton.Region = region;
-            //RotateGraphics();
-            //blueButton.Region = region;
-            //RotateGraphics();
-            //yellowButton.Region = region;
-
             // Remove the borders around the buttons and set the region
             foreach (Button button in buttons)
             {
                 button.FlatStyle = FlatStyle.Flat;
                 button.Region = region;
+
+                // Rotate the graphics before applying it to the next button
                 RotateGraphics();
             }
 
@@ -108,20 +100,20 @@ namespace SimonSays
             // Set Dictionary
             colorMap.Add(ColorType.Green, 0);
             colorMap.Add(ColorType.Red, 1);
-            colorMap.Add(ColorType.Yellow, 2);
-            colorMap.Add(ColorType.Blue, 3);
+            colorMap.Add(ColorType.Blue, 2);
+            colorMap.Add(ColorType.Yellow, 3);
 
             // Set Button Array
             buttons.SetValue(greenButton, 0);
             buttons.SetValue(redButton, 1);
-            buttons.SetValue(yellowButton, 2);
-            buttons.SetValue(blueButton, 3);
+            buttons.SetValue(blueButton, 2);
+            buttons.SetValue(yellowButton, 3);
 
             // Set Array
             sounds.SetValue(new SoundPlayer(Properties.Resources.green), 0);
             sounds.SetValue(new SoundPlayer(Properties.Resources.red), 1);
-            sounds.SetValue(new SoundPlayer(Properties.Resources.yellow), 2);
-            sounds.SetValue(new SoundPlayer(Properties.Resources.blue), 3);
+            sounds.SetValue(new SoundPlayer(Properties.Resources.blue), 2);
+            sounds.SetValue(new SoundPlayer(Properties.Resources.yellow), 3);
             sounds.SetValue(new SoundPlayer(Properties.Resources.mistake), 4);
 
             // Use Code to change the button shape
@@ -204,23 +196,23 @@ namespace SimonSays
                         await Task.Delay(500);
                         redButton.BackColor = Color.Red;
                         break;
-                    case 2: // Yellow
-
-                        yellowButton.BackColor = Color.White;
-                        await Task.Delay(500);
-                        yellowButton.BackColor = Color.Yellow;
-                        break;
-                    case 3:
+                    case 2:
 
                         blueButton.BackColor = Color.White;
                         await Task.Delay(500);
                         blueButton.BackColor = Color.Blue;
                         break;
+                    case 3: // Yellow
+
+                        yellowButton.BackColor = Color.White;
+                        await Task.Delay(500);
+                        yellowButton.BackColor = Color.Yellow;
+                        break;
                 }
 
                 // Slight Delay after each light up to more easily show when the same button
                 // lights up multiple times
-                await Task.Delay(150);
+                await Task.Delay(500);
             }
 
             // Reset the players current guess
@@ -249,6 +241,7 @@ namespace SimonSays
             // Delay to let sound play
             await Task.Delay(2000);
 
+            // Change Screens
             Form1.ChangeScreen(this, new GameOverScreen());
         }
 
@@ -260,13 +253,7 @@ namespace SimonSays
             int colorNum;
             colorMap.TryGetValue(ColorType.Green, out colorNum);
 
-            if (Form1.pattern[guess] == colorNum)
-            {
-                // Set Color
-                greenButton.BackColor = Color.DarkGreen;
-
-            }
-                ButtonEvent(colorNum);
+            ButtonEvent(colorNum);
         }
 
 
@@ -276,13 +263,7 @@ namespace SimonSays
             int colorNum;
             colorMap.TryGetValue(ColorType.Red, out colorNum);
 
-            if (Form1.pattern[guess] == colorNum)
-            {
-                // Set Color
-                redButton.BackColor = Color.DarkRed;
-
-            }
-                ButtonEvent(colorNum);
+            ButtonEvent(colorNum);
         }
 
         private void yellowButton_Click(object sender, EventArgs e)
@@ -291,13 +272,7 @@ namespace SimonSays
             int colorNum;
             colorMap.TryGetValue(ColorType.Yellow, out colorNum);
 
-            if (Form1.pattern[guess] == colorNum)
-            {
-                // Set Color
-                yellowButton.BackColor = Color.Gold;
-
-            }
-                ButtonEvent(colorNum);
+            ButtonEvent(colorNum);
         }
 
         private void blueButton_Click(object sender, EventArgs e)
@@ -305,13 +280,6 @@ namespace SimonSays
             // Check if the pattern index is equal to green
             int colorNum;
             colorMap.TryGetValue(ColorType.Blue, out colorNum);
-
-            if (Form1.pattern[guess] == colorNum)
-            {
-                // Set Color
-                blueButton.BackColor = Color.DarkBlue;
-
-            }
             
             ButtonEvent(colorNum);
         }
@@ -321,12 +289,22 @@ namespace SimonSays
             // See if the player got a game over
             if (Form1.pattern[guess] != colorNum) { GameOver(); return; }
 
+            // Set Button Color
+            buttons[colorNum].BackColor = Color.White;
+
             // Play Sound
             sounds[colorNum].Play();
+
+            // Quick Refresh
             Refresh();
+
             // Brief Pause
             await Task.Delay(200);
+
+            // Make sure all colors are correct
             ResetColors();
+
+            // Add one to guess counter
             guess++;
 
             // See if the pattern is done
@@ -347,9 +325,12 @@ namespace SimonSays
             skips--;
 
             // Check to see if theres remaining skips
+            // if not, disable the button
             if (skips == 0)
             {
                 skipButton.Enabled = false;
+
+                // Give Feedback that the button is disabled
                 skipButton.BackColor = Color.DarkGray;
             }
 
