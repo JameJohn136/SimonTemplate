@@ -32,6 +32,8 @@
             this.blueButton = new System.Windows.Forms.Button();
             this.redButton = new System.Windows.Forms.Button();
             this.greenButton = new System.Windows.Forms.Button();
+            this.skipButton = new System.Windows.Forms.Button();
+            this.skipLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // yellowButton
@@ -80,11 +82,36 @@
             this.greenButton.UseVisualStyleBackColor = false;
             this.greenButton.Click += new System.EventHandler(this.greenButton_Click);
             // 
+            // skipButton
+            // 
+            this.skipButton.BackColor = System.Drawing.Color.Silver;
+            this.skipButton.FlatAppearance.BorderSize = 0;
+            this.skipButton.Location = new System.Drawing.Point(4, 4);
+            this.skipButton.Name = "skipButton";
+            this.skipButton.Size = new System.Drawing.Size(75, 23);
+            this.skipButton.TabIndex = 4;
+            this.skipButton.Text = "SKIP";
+            this.skipButton.UseVisualStyleBackColor = false;
+            this.skipButton.Click += new System.EventHandler(this.skipButton_Click);
+            // 
+            // skipLabel
+            // 
+            this.skipLabel.AutoSize = true;
+            this.skipLabel.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skipLabel.ForeColor = System.Drawing.Color.White;
+            this.skipLabel.Location = new System.Drawing.Point(86, 10);
+            this.skipLabel.Name = "skipLabel";
+            this.skipLabel.Size = new System.Drawing.Size(133, 15);
+            this.skipLabel.TabIndex = 5;
+            this.skipLabel.Text = "Skips Remaining: 3";
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.skipLabel);
+            this.Controls.Add(this.skipButton);
             this.Controls.Add(this.yellowButton);
             this.Controls.Add(this.blueButton);
             this.Controls.Add(this.redButton);
@@ -94,6 +121,7 @@
             this.Size = new System.Drawing.Size(401, 369);
             this.Load += new System.EventHandler(this.GameScreen_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -103,5 +131,7 @@
         private System.Windows.Forms.Button blueButton;
         private System.Windows.Forms.Button redButton;
         private System.Windows.Forms.Button greenButton;
+        private System.Windows.Forms.Button skipButton;
+        private System.Windows.Forms.Label skipLabel;
     }
 }
