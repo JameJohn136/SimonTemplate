@@ -173,8 +173,8 @@ namespace SimonSays
             // General Delay to help pacing
             await Task.Delay(250);
   
-            // Random Number 0-3 (Each being a button)
-            int random = randGen.Next(0, 4);
+            // Random Number from 0 - # of buttons (Each being a button)
+            int random = randGen.Next(0, buttons.Length + 1);
 
             // Save what button it is for next loop
             Form1.pattern.Add(random);
