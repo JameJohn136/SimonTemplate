@@ -18,12 +18,14 @@ namespace SimonSays
 
         private void newButton_Click(object sender, EventArgs e)
         {
+            // Continue to Game Screen
             Form1.ChangeScreen(this, new GameScreen());
         }
 
 
         private void exitButton_Click(object sender, EventArgs e)
         {
+            // Close Application
             Application.Exit();
         }
     }

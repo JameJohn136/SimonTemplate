@@ -25,6 +25,7 @@ namespace SimonSays
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Switch to the main menu
             ChangeScreen(this, new MenuScreen());
         }
 

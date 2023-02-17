@@ -18,7 +18,10 @@ namespace SimonSays
 
         private void GameOverScreen_Load(object sender, EventArgs e)
         {
+            // Get the length of the pattern (player score)
             int length = Form1.pattern.Count() - 1;
+
+            // Set Player Score Labels Text
             lengthLabel.Text = $"{length}";
 
             // Check to see if theres a new highscore
@@ -31,6 +34,7 @@ namespace SimonSays
 
         private void closeButton_Click(object sender, EventArgs e)
         {
+            // Return to Main Menu
             Form1.ChangeScreen(this, new MenuScreen());
         }
     }
